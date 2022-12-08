@@ -6,7 +6,7 @@ class Paddle(pygame.sprite.Sprite):
         self.image = pygame.image.load("paddle.png")
         self.image = pygame.transform.scale(self.image, (160, 20))
         self.image_rect = self.image.get_rect(center=(x_pos, y_pos))
-        self.speed = 5
+        self.speed = 3
     
     def update(self):
         self.image_rect.x += self.speed
@@ -28,9 +28,9 @@ class Ball(pygame.sprite.Sprite):
     def update(self):
         self.image_rect.x += self.speed_x
         self.image_rect.y += self.speed_y
-        if self.image_rect.top <= 0 or self.image_rect.bottom >= screen_height:
+        if self.image_rect.top <= play_field.top or self.image_rect.bottom >= play_field.bottom:
             self.speed_y *= -1
-        if self.image_rect.left <= 0 or self.image_rect.right >= screen_width:
+        if self.image_rect.left <= play_field.left or self.image_rect.right >= play_field.right:
             self.speed_x *= -1
         
         screen.blit(self.image, self.image_rect)
@@ -47,7 +47,7 @@ play_field = pygame.Rect(0,0, screen_width/1.05, screen_height/1.05)
 play_field.center = (screen_width/2, screen_height/2)
 
 # Paddle Group
-paddle = Paddle(screen_width/2, screen_height/1.1)
+paddle = Paddle(play_field.width/2, play_field.height/1.02)
 paddle_group = pygame.sprite.Group()
 paddle_group.add(paddle)
 
